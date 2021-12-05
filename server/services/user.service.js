@@ -1,5 +1,18 @@
 const { User } = require("../models/user.model");
 const Util = require("../util/hash");
+const db = require("../util/database");
+
+module.exports.testAPI = async (req, res, next) => {
+  try {
+    const limit = 30;
+
+    const data = await db.getResultList(`select * from user limit $1`, [limit]);
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(200).send(error);
+  }
+};
 
 module.exports.signUp = async (req, res, next) => {
   try {

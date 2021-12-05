@@ -9,7 +9,7 @@ const app = express();
 const server = require("http").Server(app);
 
 // Gọi các route
-const Util = require("./util/database");
+// const Util = require("./util/database");
 const indexRoute = require("./routes/index");
 
 // const dev = process.env.NODE_ENV !== "production";
@@ -54,4 +54,4 @@ server.listen(port, (err) => {
   console.log(`> Ready on http://localhost:${port}`);
 });
 
-Util.getConnectDB();
+// Util.getConnectDB();
