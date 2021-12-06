@@ -1,12 +1,11 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  user: 1,
-  host: 2,
-  database: 3,
-  password: 4,
-  port: 5,
-  max: 100,
+  user: "postgres",
+  host: "localhost",
+  database: "productsDb",
+  password: "123456",
+  port: 5432,
 });
 
 module.exports = {
@@ -64,7 +63,7 @@ module.exports = {
       console.error(
         `The last executed query on this client was: ${client.lastQuery}`
       );
-    }, 120000);
+    }, 1200000);
     // monkey patch the query method to keep track of the last query executed
     client.query = (...args) => {
       client.lastQuery = args;

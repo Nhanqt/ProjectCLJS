@@ -3,7 +3,7 @@ const cors = require("cors");
 const express_urgent = require("express-useragent");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-// const next = require("next");
+const next = require("next");
 
 const app = express();
 const server = require("http").Server(app);
@@ -12,9 +12,9 @@ const server = require("http").Server(app);
 // const Util = require("./util/database");
 const indexRoute = require("./routes/index");
 
-// const dev = process.env.NODE_ENV !== "production";
-// const nextApp = next({ dev });
-// const nextHandler = nextApp.getRequestHandler();
+const dev = process.env.NODE_ENV !== "production";
+const nextApp = next({ dev });
+const nextHandler = nextApp.getRequestHandler();
 
 const port = process.env.PORT || 5000;
 
@@ -53,5 +53,3 @@ server.listen(port, (err) => {
   if (err) throw err;
   console.log(`> Ready on http://localhost:${port}`);
 });
-
-// Util.getConnectDB();

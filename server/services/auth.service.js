@@ -2,16 +2,27 @@ const Util = require("../util/auth");
 
 module.exports.login = async (req, res, next) => {
   try {
-    const { _id, userName, fullName, role, age, phone } = req.user;
+    const {
+      userid,
+      username,
+      password,
+      address,
+      phone,
+      fullname,
+      active = true,
+      roleid = 2,
+    } = req.user;
 
     const tokeninfo = {
       user: {
-        id: _id,
-        userName: userName,
-        fullName: fullName,
-        role: role,
-        age: age,
+        userid: userid,
+        username: username,
+        password: password,
+        address: address,
+        fullname: fullname,
         phone: phone,
+        active: active,
+        roleid: roleid,
       },
     };
 
@@ -23,8 +34,8 @@ module.exports.login = async (req, res, next) => {
     });
     res.status(200).json({
       token: accessToken,
-      userName: userName,
-      id: _id,
+      username: username,
+      userid: userid,
     });
   } catch (e) {
     console.log(e.message);
