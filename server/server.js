@@ -23,11 +23,7 @@ app.use(express.json());
 app.use(express.static("static"));
 app.set("trust proxy", true);
 app.use(express_urgent.express());
-app.use(
-  cors({
-    origin: ["http://localhost:5000"],
-  })
-);
+app.use(cors());
 app.use(cookieParser());
 app.use(
   morgan(function (tokens, req, res) {
