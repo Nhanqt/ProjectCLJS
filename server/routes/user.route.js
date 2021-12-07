@@ -7,7 +7,12 @@ const authMiddleware = require("../middlewares/auth");
 
 const Router = express.Router();
 
-Router.get("/getAllUser", userService.getAllUsers);
+Router.get(
+  "/getAllUsers",
+  authMiddleware.authenticateToken,
+  authMiddleware.authenticateRole,
+  userService.getAllUsers
+);
 
 Router.post(
   "/login",
@@ -16,7 +21,7 @@ Router.post(
   authService.login
 );
 
-// Router.get("/logout", authService.logout);
+Router.get("/logout", authService.logout);
 
 Router.post("/", userMiddleware.checkUserNameDuplicate, userService.signUp);
 

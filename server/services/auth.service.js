@@ -10,7 +10,7 @@ module.exports.login = async (req, res, next) => {
       phone,
       fullname,
       active = true,
-      roleid = 2,
+      roleid,
     } = req.user;
 
     const tokeninfo = {
@@ -36,6 +36,7 @@ module.exports.login = async (req, res, next) => {
       token: accessToken,
       username: username,
       userid: userid,
+      roleid: roleid,
     });
   } catch (e) {
     console.log(e.message);
@@ -45,5 +46,5 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.logout = async (req, res, next) => {
   res.clearCookie("bkcookie");
-  res.status(200).json({ message: "Đăng xuất thành công" });
+  res.status(200).json({ message: "Logout success" });
 };

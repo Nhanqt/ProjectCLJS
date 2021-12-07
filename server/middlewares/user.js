@@ -23,12 +23,12 @@ module.exports.checkUserNameDuplicate = async (req, res, next) => {
 
 module.exports.checkUserNameExist = async (req, res, next) => {
   try {
-    const userName = req.body.username;
+    const { username } = req.body;
     const result = await db.query(
       "select username from tbl_users where username = $1",
-      [userName]
+      [username]
     );
-    if (!result)
+    if (!result.rows[0])
       return res.status(400).json({ message: "Tài khoản không tồn tại" });
     else if (result.status === false)
       return res
@@ -46,15 +46,15 @@ module.exports.checkUserNameExist = async (req, res, next) => {
 
 module.exports.checkPassWordMatched = async (req, res, next) => {
   try {
-    const { password } = req.body;
-    const hashed = await Util.generateHashString(password);
-    const isPasswordMatched = await Util.checkHashString(
-      req.body.password,
-      hashed
+    const { password, username } = req.body;
+    const result = await db.query(
+      "select username,password from tbl_users where username = $1",
+      [username]
     );
-
-    console.log(hashed);
-    console.log(isPasswordMatched);
+    const isPasswordMatched = await Util.checkHashString(
+      password,
+      result.rows[0].password
+    );
     if (!isPasswordMatched) {
       res.status(400).json({ message: "Mật khẩu không đúng" });
     } else {

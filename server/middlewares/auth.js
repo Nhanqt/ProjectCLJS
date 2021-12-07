@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const db = require("../util/database");
 const Config = require("../config/auth");
 
 module.exports.authenticateToken = async (req, res, next) => {
@@ -32,8 +32,12 @@ module.exports.authenticateToken = async (req, res, next) => {
 
 module.exports.authenticateRole = async (req, res, next) => {
   try {
-    const { role } = req.user.user;
-    if (role !== "admin") {
+    const { username } = req.body;
+    const getRoleId = await db.query(
+      "select roleid from tbl_users where username = $1",
+      [username]
+    );
+    if (getRoleId.rows[0].roleid == 2) {
       return res.status(403).json({ message: "Không đủ quyền truy cập" });
     } else {
       return next();
