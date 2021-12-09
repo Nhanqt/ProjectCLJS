@@ -5,7 +5,7 @@ const form = document.createElement("form");
 form.classList.add("formInput");
 
 const usernameInput = new Login("Username", "text");
-const passwordInput = new Login("Password", "text");
+const passwordInput = new Login("Password", "password");
 form.appendChild(usernameInput.render());
 form.appendChild(passwordInput.render());
 
@@ -18,7 +18,6 @@ btnRegister.classList.add("btnRegis");
 btnRegister.innerHTML = "Register A New Account";
 
 const line = document.createElement("p");
-line.classList.add("line");
 line.innerHTML = "__________________or__________________";
 
 const btnGroup = document.createElement("div");
@@ -28,7 +27,8 @@ btnGroup.appendChild(line);
 btnGroup.appendChild(btnRegister);
 form.appendChild(btnGroup);
 
-btnSubmit.addEventListener("click", () => {
+btnSubmit.addEventListener("submit", (evt) => {
+  evt.preventDefault();
   usernameInput.setSuccessMessage("Look good!");
   passwordInput.setErrorMessage("This field cannot be empty!");
 });

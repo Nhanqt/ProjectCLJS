@@ -1,6 +1,5 @@
 const Util = require("../util/hash");
 const db = require("../util/database");
-const { message } = require("antd");
 
 module.exports.getAllUsers = async (req, res, next) => {
   try {
@@ -24,11 +23,20 @@ module.exports.signUp = async (req, res, next) => {
       roleid = 2,
     } = req.body;
     const hashed = await Util.generateHashString(password);
-    await db.query(
-      "INSERT INTO tbl_users (username,password,address,phone,fullname,active,roleid) values ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
-      [username, hashed, address, phone, fullname, active, roleid]
-    );
-    res.status(200).json({ message: "Sign Up success!" });
+    if (
+      !req.body.address ||
+      !req.body.username ||
+      !req.body.phone ||
+      !req.body.fullname
+    ) {
+      res.status(400).json({ message: "Error with param" });
+    } else {
+      await db.query(
+        "INSERT INTO tbl_users (username,password,address,phone,fullname,active,roleid) values ($1,$2,$3,$4,$5,$6,$7)",
+        [username, hashed, address, phone, fullname, active, roleid]
+      );
+      res.status(200).json({ message: "Sign Up success!" });
+    }
   } catch (e) {
     console.log(e.message);
     return res.status(400).json({ message: e.message });
