@@ -3,7 +3,6 @@ const cors = require("cors");
 const express_urgent = require("express-useragent");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-const next = require("next");
 
 const app = express();
 const server = require("http").Server(app);
@@ -11,10 +10,6 @@ const server = require("http").Server(app);
 // Gọi các route
 // const Util = require("./util/database");
 const indexRoute = require("./routes/index");
-
-const dev = process.env.NODE_ENV !== "production";
-const nextApp = next({ dev });
-const nextHandler = nextApp.getRequestHandler();
 
 const port = process.env.PORT || 5000;
 
