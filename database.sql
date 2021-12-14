@@ -1,3 +1,8 @@
+CREATE DATABASE hanashop;
+
+USE hanashop;
+
+
 CREATE TABLE tbl_users (
 	userId serial primary key,
 	username varchar(50) NOT NULL,
